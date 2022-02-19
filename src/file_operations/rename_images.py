@@ -1,12 +1,15 @@
 #!/usr/bin/python
 import os
 
+from tqdm import tqdm
 
-root = '/home/leins275/Projects/Polytech/master/big-data/report/images/ganre_predict'
-images = list(os.walk(root))
 
-for i, _ in enumerate(images[0][2]):
-    old = os.path.join(root, _)
-    new = os.path.join(root, f'img-{i}.png')
-    os.replace(old, new)
+def rename_images(path: str = "") -> None:
+    images = list(os.walk(path))[0][2]
+
+    for i, filename in tqdm(enumerate(images)):
+        if filename.split(".")[-1] == "png":
+            old = os.path.join(path, filename)
+            new = os.path.join(path, f'{i + 1}.png')
+            os.replace(old, new)
 
